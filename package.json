@@ -1,0 +1,31 @@
+{
+  "name": "expo-ollama-chat",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "npm run setup && npm run dev",
+    "setup": "npm run check-ollama && npm run install-deps && npm run setup-model",
+    "check-ollama": "node scripts/check-ollama.js",
+    "install-deps": "npx create-expo-app@latest . --template blank-typescript --overwrite --skip-install || true && npm install",
+    "setup-model": "node scripts/setup-model.js",
+    "dev": "npx expo start --clear",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "prebuild": "expo prebuild"
+  },
+  "dependencies": {
+    "expo": "~51.0.32",
+    "expo-status-bar": "~1.12.1",
+    "react": "18.2.0",
+    "react-native": "0.74.5",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.2.14",
+    "@types/react-native": "^0.72.2",
+    "typescript": "~5.3.3"
+  },
+  "private": true
+}
