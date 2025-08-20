@@ -1,6 +1,6 @@
 # 🦙 Expo Ollama Chat
 
-A production-ready Expo app that runs a fully offline LLM using Ollama. Chat with AI models running locally on your machine - no internet required after setup!
+A production-ready Expo app that runs a fully offline LLM using Ollama in Docker. Chat with AI models running locally on your machine - no complex setup required!
 
 ## 🚀 One-Command Setup
 
@@ -9,28 +9,22 @@ npm start
 ```
 
 That's it! This single command will:
-- ✅ Check if Ollama is installed
+- ✅ Start Ollama in Docker automatically
 - ✅ Install all dependencies  
 - ✅ Download a fast AI model (llama3.2:1b)
 - ✅ Start the Expo development server
 
 ## 📋 Prerequisites
 
-You need **Ollama** installed on your system:
+You only need **Docker** installed on your system:
 
-### Install Ollama:
+### Install Docker:
 ```bash
-# macOS/Linux
-curl -fsSL https://ollama.ai/install.sh | sh
-
-# Windows
-# Download from https://ollama.ai/download
+# Visit: https://docs.docker.com/get-docker/
+# Docker Desktop includes Docker Compose
 ```
 
-### Start Ollama (if not auto-started):
-```bash
-ollama serve
-```
+That's all! No need to install Ollama separately - it runs in Docker.
 
 ## 🎯 Features
 
@@ -47,19 +41,16 @@ ollama serve
 If the automatic setup fails:
 
 ```bash
-# 1. Install Ollama
-curl -fsSL https://ollama.ai/install.sh | sh
+# 1. Start Ollama in Docker
+docker-compose up -d
 
-# 2. Start Ollama server
-ollama serve
+# 2. Pull a model
+docker exec ollama-server ollama pull llama3.2:1b
 
-# 3. Pull a model
-ollama pull llama3.2:1b
-
-# 4. Install dependencies
+# 3. Install dependencies
 npm install
 
-# 5. Start Expo
+# 4. Start Expo
 npx expo start --clear
 ```
 
@@ -69,16 +60,16 @@ You can use any Ollama-compatible model:
 
 ```bash
 # Larger models (better quality, slower)
-ollama pull llama3.2:3b
-ollama pull mistral
-ollama pull codellama
+docker exec ollama-server ollama pull llama3.2:3b
+docker exec ollama-server ollama pull mistral
+docker exec ollama-server ollama pull codellama
 
 # Smaller models (faster, less capable)  
-ollama pull phi3:mini
-ollama pull tinyllama
+docker exec ollama-server ollama pull phi3:mini
+docker exec ollama-server ollama pull tinyllama
 
 # List available models
-ollama list
+docker exec ollama-server ollama list
 ```
 
 The app will automatically detect and use available models.
@@ -104,19 +95,20 @@ npm run setup-model   # Download AI model
 
 ### "Ollama not running" error:
 ```bash
-ollama serve
+docker-compose up -d
 ```
 
 ### "Model not found" error:
 ```bash
-ollama pull llama3.2:1b
-ollama list
+docker exec ollama-server ollama pull llama3.2:1b
+docker exec ollama-server ollama list
 ```
 
 ### Connection issues:
-- Make sure Ollama is running on `localhost:11434`
-- Check firewall settings
-- Try restarting Ollama: `pkill ollama && ollama serve`
+- Make sure Docker is running
+- Check if container is up: `docker ps`
+- Try restarting: `docker-compose restart`
+- View logs: `docker logs ollama-server`
 
 ### Performance tips:
 - Use smaller models for faster responses: `phi3:mini`, `tinyllama`
@@ -132,7 +124,9 @@ ollama list
 ├── scripts/
 │   ├── check-ollama.js    # Ollama installation check
 │   └── setup-model.js     # Model download script
-└── package.json           # Dependencies & scripts
+├── docker-compose.yml     # Docker configuration
+├── start.sh              # One-command startup script
+└── package.json          # Dependencies & scripts
 ```
 
 ## 🔒 Privacy & Security
