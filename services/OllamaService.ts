@@ -35,7 +35,7 @@ export class OllamaService {
   private baseUrl: string;
   private defaultModel: string;
 
-  constructor(baseUrl: string = 'http://192.168.1.118:11434', defaultModel: string = 'llama3.2:1b') {
+  constructor(baseUrl: string = 'http://localhost:11434', defaultModel: string = 'llama3.2:1b') {
     this.baseUrl = baseUrl;
     this.defaultModel = defaultModel;
   }
